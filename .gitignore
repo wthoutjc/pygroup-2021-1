@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 
-settings.py
+backend/CRUD/settings.py
 
 # testing
 /coverage
