@@ -8,7 +8,6 @@
 .start {
     width: 100vw;
     height: 100vh;
-    background-color: aqua;
     font-family: 'Montserrat', sans-serif;
     display: grid;
     grid-template-rows: 75px calc(100vh - 130px) 55px;
@@ -17,14 +16,12 @@
     "reader"
     "footer"
 }
-
 .start .header {
-    background-color: azure;
     display: flex;
+    background-color: azure;
     box-sizing: border-box;
     padding: 10px;
     border-bottom: 1px solid black;
-    box-shadow:160px teal;
 }
 .start .header .header-right{
     width: 50%;
@@ -42,9 +39,7 @@
     width: 50%;
     height: 100%;
 }
-
 .start .reader {
-    background-color: rgb(132, 226, 132);
     display: flex;
     flex-direction: column;
 }
@@ -52,7 +47,6 @@
     color: black;
     width: 100%;
     height: 15%;
-    background-color: azure;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -62,7 +56,6 @@
     color: black;
     width: 100%;
     height: 85%;
-    background-color: rgb(151, 151, 224);
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;

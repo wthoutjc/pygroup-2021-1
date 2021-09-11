@@ -25,7 +25,17 @@ app.config['SECRET_KEY'] = "#pass"
 #Rutas CRUD
 @app.route("/create", methods=["POST", "GET"])
 def create():
-    crud.create() #Create
+    if request.method == "POST":
+        if request.files:
+            name = request.files.getlist('file')
+            link = request.files.getlist('file')
+            image = request.files.getlist('file')
+            print(name)
+            print(link)
+            print(image[0])
+            # crud.create() #Create
+    res = make_response(jsonify({"results": 'ok'}), 200)
+    return res
 
 @app.route("/read", methods=["GET"])
 def read():

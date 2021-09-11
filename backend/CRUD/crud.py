@@ -1,6 +1,6 @@
 import mysql.connector
 
-from settings import SETTINGS
+from CRUD.settings import SETTINGS
 
 class CRUD():
     def __init__(self):
@@ -13,15 +13,13 @@ class CRUD():
         self.ncursor = self.based.cursor()
 
     def create(self):
-        self.ncursor.execute("READ ..")
+        self.ncursor.execute("SELECT * FROM movies")
 
     def read(self):
-        self.ncursor.execute("READ ..")
+        self.ncursor.execute("SELECT * FROM movies")
 
     def update(self):
-        self.ncursor.execute("UPDATE ..")
+        self.ncursor.execute("SELECT * FROM movies")
 
     def delete(self):
-        self.ncursor.execute("DELETE ..")
-
-crud = CRUD()
+        self.ncursor.execute("SELECT * FROM movies")

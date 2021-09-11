@@ -1,6 +1,9 @@
 import '../style/start.css'
 import { useState } from 'react'
 
+//Components:
+import BtnAddMovie from './btnAddMovie'
+
 const logoUDFJC = require('../images/header-right.png')
 
 const Start = () => {
@@ -41,7 +44,9 @@ const Start = () => {
             <h4> - Name 0 </h4>
             <h4> - Name 1 </h4>
           </div>
-          <div className="movies"></div>
+          <div className="movies">
+            <BtnAddMovie />
+          </div>
         </div>
         <div className="footer"></div>
       </div>
