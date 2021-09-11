@@ -1,0 +1,18 @@
+use pygroup;
+
+SET FOREIGN_KEY_CHECKS=0;
+
+DROP TABLE IF EXISTS `movies` CASCADE; 
+
+CREATE TABLE `movies`(
+	`k_movie` INT NOT NULL AUTO_INCREMENT,
+	`n_nombre` VARCHAR(15) NOT NULL,
+	`n_link` VARCHAR(35) NOT NULL,
+	`o_img` LONGBLOB
+);
+
+/* PRIMARY KEYS */
+
+ALTER TABLE `movies` ADD CONSTRAINT `PK_k_movies` PRIMARY KEY (k_movie);
+
+SET FOREIGN_KEY_CHECKS=1; 
