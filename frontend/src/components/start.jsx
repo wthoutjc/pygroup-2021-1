@@ -1,31 +1,38 @@
 import '../style/start.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 //Components:
 import BtnAddMovie from './btnAddMovie'
+import Movie from './movie'
 
 const logoUDFJC = require('../images/header-right.png')
 
 const Start = () => {
-  const url = 'http://127.0.0.1:5000/read'
-  const [stateStatus, setStatusStatus] = useState('')
+  const [movies, setMovies] = useState([])
+  const [messageStatus, setMessageStatus] = useState({
+    isAMessage: false,
+    message: '',
+  })
 
-  const sendInfo = async () => {
-    let data = {
-      text: textStatus,
+  useEffect(() => {
+    const getInfo = async () => {
+      const url = 'http://127.0.0.1:5000/read'
+      const $movies = document.getElementById('movies')
+
+      const settings = {
+        method: 'GET',
+        headers: new Headers({
+          'Access-Control-Allow-Origin': '*',
+        }),
+      }
+      const res = await fetch(`${url}`, settings)
+      const blob = await res.json()
+      setMovies(await blob.results)
+      //`data:image/png;base64,${text}`
     }
-    const settings = {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: new Headers({
-        'content-type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      }),
-    }
-    const res = await fetch(`${url}`, settings)
-    data = await res.json()
-    data.results.map((lex) => ($textResults.innerHTML += `${lex}\n`))
-  }
+
+    getInfo()
+  }, [])
 
   return (
     <>
@@ -44,7 +51,27 @@ const Start = () => {
             <h4> - Name 0 </h4>
             <h4> - Name 1 </h4>
           </div>
-          <div className="movies">
+          <div className="message" id="message">
+            {' '}
+            {messageStatus.isAMessage ? (
+              <div className="success">
+                <h3 className="label-file">{messageStatus.message}</h3>
+              </div>
+            ) : (
+              <div className="error">
+                <h3 className="label-file">{messageStatus.message}</h3>
+              </div>
+            )}
+          </div>
+          <div className="movies" id="movies">
+            {movies.map((data) => (
+              <Movie
+                key={data.id}
+                name={data.name}
+                link={data.link}
+                src={`data:image/png;base64,${data.image}`}
+              />
+            ))}
             <BtnAddMovie />
           </div>
         </div>

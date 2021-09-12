@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 const AddMovie = () => {
   const [fileStatus, setFileStatus] = useState('')
-  const [loadStatus, setLoadStatus] = useState(false)
+  const [loadStatus, setLoadStatus] = useState('Load an image')
   const [nameStatus, setNameStatus] = useState('')
   const [linkStatus, setLinkStatus] = useState('')
 
@@ -12,25 +12,43 @@ const AddMovie = () => {
     let archivoRuta = fileStatus.value
     const url = 'http://127.0.0.1:5000/create'
     const allowExtensions = /(.png|.jpg|.jpeg)$/i
+    const allowURL = /^(ftp|http|https):\/\/[^ "]+$/
+    const $addMovieSubmit = document.getElementById('add-movie-submit')
+    const $nameMovie = document.getElementById('name-movie')
+    const $labelPhoto = document.getElementById('label-file')
+    const $link = document.getElementById('link')
+
+    console.log(allowExtensions.exec(archivoRuta))
 
     if (!allowExtensions.exec(archivoRuta)) {
-      alert('Incorrect file!')
+      $labelPhoto.style.border = '1px solid red'
+      $labelPhoto.style.color = 'red'
       setFileStatus(0)
+      setLoadStatus('Incorrect file')
       return false
     } else {
-      if (fileStatus.files && fileStatus.files[0]) {
-        const $effectLoader = document.getElementById('loader')
-        const $labelPhoto = document.getElementById('label-file')
-        const $addMovieSubmit = document.getElementById('add-movie-submit')
-        const $nameMovie = document.getElementById('name-movie')
-        const $link = document.getElementById('link')
+      if (!allowURL.exec(linkStatus)) {
+        $labelPhoto.style.border = '1px solid red'
+        $labelPhoto.style.color = 'red'
+        setFileStatus(0)
+        setLoadStatus('Incorrect URL')
+        return false
+      } else if (fileStatus.files && fileStatus.files[0]) {
+        let data = new FormData()
 
-        let visor = new FileReader()
+        $addMovieSubmit.innerHTML = `<div class="loader">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>`
+        $labelPhoto.style.display = 'none'
+        $addMovieSubmit.style.border = 'none'
+        $nameMovie.style.display = 'none'
+        $link.style.display = 'none'
 
-        var data = new FormData()
+        data.append('file', fileStatus.files[0])
         data.append('name', nameStatus)
         data.append('link', linkStatus)
-        data.append('file', fileStatus.files[0])
 
         const settings = {
           method: 'POST',
@@ -39,25 +57,20 @@ const AddMovie = () => {
             'Access-Control-Allow-Origin': '*',
           }),
         }
-
-        visor.onload = async (e) => {
-          $labelPhoto.style.display = 'none'
-          $addMovieSubmit.style.display = 'none'
-          $effectLoader.style.display = 'flex'
-          $nameMovie.style.display = 'none'
-          $link.style.display = 'none'
-
-          alert('ok')
-          const res = await fetch(`${url}`, settings)
-          if (res) {
-            $labelPhoto.style.display = 'flex'
-            $addMovieSubmit.style.display = 'flex'
-            $effectLoader.style.display = 'none'
-            $nameMovie.style.display = 'flex'
-            $link.style.display = 'flex'
-          }
+        setLoadStatus('Success')
+        const res = await fetch(`${url}`, settings)
+        if (await res) {
+          $labelPhoto.style.display = 'flex'
+          $addMovieSubmit.style.display = 'flex'
+          $nameMovie.style.display = 'flex'
+          $link.style.display = 'flex'
+          $labelPhoto.style.border = '1px solid black'
+          $labelPhoto.style.color = 'black'
+          $addMovieSubmit.innerHTML = 'Success'
+          $addMovieSubmit.style.border = '1px solid black'
+          //setSendStatus(true)
+          window.location.href = 'http://localhost:3000'
         }
-        visor.readAsDataURL(fileStatus.files[0])
       } else {
         alert('some fails')
       }
@@ -66,6 +79,7 @@ const AddMovie = () => {
   return (
     <>
       <div className="movie-container">
+        <h1 className="tittle">CREATE A MOVIE</h1>
         <div className="movie-form">
           <input
             type="text"
@@ -77,7 +91,7 @@ const AddMovie = () => {
             }}
           />
           <input
-            type="text"
+            type="link"
             className="link"
             placeholder="Link"
             id="link"
@@ -90,13 +104,11 @@ const AddMovie = () => {
             id="image-movie"
             onChange={(e) => {
               setFileStatus(e.target)
-              setLoadStatus(true)
+              setLoadStatus('File loaded, click again to update')
             }}
           />
           <label htmlFor="image-movie" id="label-file">
-            {loadStatus
-              ? 'File loaded, click again to update'
-              : 'Load an image'}
+            {loadStatus}
           </label>
           <Link
             className="add-movie-submit"
@@ -106,13 +118,6 @@ const AddMovie = () => {
           >
             Add Movie
           </Link>
-          <div className="loader-container" id="loader">
-            <div className="loader">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </div>
         </div>
       </div>
     </>

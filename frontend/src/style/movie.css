@@ -1,0 +1,16 @@
+.movie{
+    height: 300px;
+    width: 210px;
+    border-radius: 1em;
+    border: 2px dashed black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    margin: 0 1em 1em 1em;
+}
+.movie img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
