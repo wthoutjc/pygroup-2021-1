@@ -1,16 +1,28 @@
 .movie{
-    height: 300px;
-    width: 210px;
+    height: 310px;
+    width: 215px;
     border-radius: 1em;
-    border: 2px dashed black;
     display: flex;
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    margin: 0 1em 1em 1em;
+    margin: 1em;
 }
-.movie img{
+.movie label:hover{
+    cursor: pointer;
+    filter: drop-shadow(4px 4px 15px rgb(130, 130, 165));
+    transition: 0.4s;
+}
+.movie label input[type="checkbox"]{
+    display: none;
+}
+.movie label{
     width: 100%;
     height: 100%;
-    object-fit: contain;
+}
+.movie label span img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    border-radius: 1em;
 }

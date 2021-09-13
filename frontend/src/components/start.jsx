@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 //Components:
 import BtnAddMovie from './btnAddMovie'
 import Movie from './movie'
+import ReadSpecific from './readSpecific'
 
 const logoUDFJC = require('../images/header-right.png')
 
@@ -13,11 +14,12 @@ const Start = () => {
     isAMessage: false,
     message: '',
   })
+  const [showPopUp, setShowPopUp] = useState(false)
+  const [readSpecific, setReadSpecific] = useState(null)
 
   useEffect(() => {
     const getInfo = async () => {
       const url = 'http://127.0.0.1:5000/read'
-      const $movies = document.getElementById('movies')
 
       const settings = {
         method: 'GET',
@@ -28,14 +30,17 @@ const Start = () => {
       const res = await fetch(`${url}`, settings)
       const blob = await res.json()
       setMovies(await blob.results)
-      //`data:image/png;base64,${text}`
     }
-
     getInfo()
   }, [])
 
   return (
     <>
+      <ReadSpecific
+        readSpecific={readSpecific}
+        showPopUp={showPopUp}
+        setShowPopUp={setShowPopUp}
+      ></ReadSpecific>
       <div className="start">
         <div className="header">
           <div className="header-left">
@@ -63,19 +68,20 @@ const Start = () => {
               </div>
             )}
           </div>
-          <div className="movies" id="movies">
+          <div className="movies">
             {movies.map((data) => (
               <Movie
                 key={data.id}
-                name={data.name}
-                link={data.link}
+                id={data.id}
                 src={`data:image/png;base64,${data.image}`}
+                showPopUp={showPopUp}
+                setShowPopUp={setShowPopUp}
+                setReadSpecific={setReadSpecific}
               />
             ))}
             <BtnAddMovie />
           </div>
         </div>
-        <div className="footer"></div>
       </div>
     </>
   )

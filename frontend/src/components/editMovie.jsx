@@ -1,16 +1,20 @@
 import '../style/addMovie.css'
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
 
-const AddMovie = () => {
+import { useState, useEffect } from 'react'
+
+const EditMovie = () => {
+  const url_ = window.location.href
+  const id = url_.substr(url_.length - 1)
+
   const [fileStatus, setFileStatus] = useState('')
   const [loadStatus, setLoadStatus] = useState('Load an image')
   const [nameStatus, setNameStatus] = useState('')
   const [linkStatus, setLinkStatus] = useState('')
 
-  const sendInfo = async () => {
+  const updateInfo = async () => {
     let archivoRuta = fileStatus.value
-    const url = 'http://127.0.0.1:5000/create'
+    const url = `http://127.0.0.1:5000/update/${id}`
     const allowExtensions = /(.png|.jpg|.jpeg)$/i
     const allowURL = /^(ftp|http|https):\/\/[^ "]+$/
     const $addMovieSubmit = document.getElementById('add-movie-submit')
@@ -57,6 +61,7 @@ const AddMovie = () => {
         }
         setLoadStatus('Success')
         const res = await fetch(`${url}`, settings)
+        console.log(await res)
         if (await res) {
           $labelPhoto.style.display = 'flex'
           $addMovieSubmit.style.display = 'flex'
@@ -74,10 +79,11 @@ const AddMovie = () => {
       }
     }
   }
+
   return (
     <>
       <div className="movie-container">
-        <h1 className="tittle">CREATE A MOVIE</h1>
+        <h1 className="tittle">EDIT A MOVIE</h1>
         <div className="movie-form">
           <input
             type="text"
@@ -112,7 +118,7 @@ const AddMovie = () => {
             className="add-movie-submit"
             id="add-movie-submit"
             to="#"
-            onClick={sendInfo}
+            onClick={updateInfo}
           >
             Add Movie
           </Link>
@@ -122,4 +128,4 @@ const AddMovie = () => {
   )
 }
 
-export default AddMovie
+export default EditMovie

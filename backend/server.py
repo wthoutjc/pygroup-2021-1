@@ -1,10 +1,6 @@
-from io import BytesIO
-from flask import Flask, request, render_template, jsonify, make_response, after_this_request, redirect, url_for, send_file
+from flask import Flask, request, jsonify, make_response
 import os
 from flask_cors import CORS
-from PIL import ImageFile, Image
-from numpy import expand_dims
-from werkzeug.utils import secure_filename
 import base64
 
 #Lógica CRUD
@@ -54,15 +50,44 @@ def read():
             res_data['image'] = base64.b64encode(x[3]).decode()
             res.append(res_data)
         return make_response(jsonify({"results": res}), 200)
-    return make_response(jsonify({"results": 'Error'}), 500)
-    
-@app.route("/update", methods=["POST"])
-def update():
-    crud.update() #Create
+    return make_response(jsonify({"results": data}), 500)
 
-@app.route("/delete", methods=["DELETE"])
-def delete():
-    crud.delete() #Create
+@app.route("/read-specific/<id>", methods=["GET"])
+def read_specific(id):
+    data = crud.read_specific(id)
+    if data:
+        res = []
+        res_data = {}
+        res_data['id'] = data[0]
+        res_data['name'] = data[1]
+        res_data['link'] = data[2]
+        res_data['image'] = base64.b64encode(data[3]).decode()
+        res.append(res_data)
+        return make_response(jsonify({"results": res}), 200)
+    print(data)
+    return make_response(jsonify({"results": data}), 500)
+
+@app.route("/update/<id>", methods=["POST"])
+def update(id):
+    if request.method == "POST":
+        if request.files: #En request.files van las imagenes
+            image = request.files['file']
+        if request.form: #En request.form van los strings
+            name = request.form['name']
+            link = request.form['link']
+        data = crud.update(id, name, link, image) #Create
+        print(data)
+        if data:
+            return make_response(jsonify({"results": 'Error'}), 500)
+        return make_response(jsonify({"results": 'ok'}), 200)
+    
+@app.route("/delete/<id>", methods=["DELETE"])
+def delete(id):
+    data = crud.delete(id) #Create
+    print(data)
+    if data:
+        return make_response(jsonify({"results": data}), 500)
+    return make_response(jsonify({"results": data}), 200)
 
 if __name__ == '__main__':
     app.run(debug = True)
