@@ -26,9 +26,10 @@ def create():
             name = request.form['name']
             link = request.form['link']
         data = crud.create(name, link, image) #Create
-        res = make_response(jsonify({"results": 'ok'}), 200)
-        time.sleep(2.4)
-        print(data)
+        if data:
+            res = make_response(jsonify({"results": data}), 500)
+        else:
+            res = make_response(jsonify({"results": 'ok'}), 200)
         return res
     
 
