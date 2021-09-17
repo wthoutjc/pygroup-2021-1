@@ -52,6 +52,8 @@
 .popup .content-popup .body-popup .results-popup .right-popup{
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: 100%;
 }
 .popup .content-popup .body-popup .results-popup .right-popup .img-popup{
     height: 310px;
@@ -69,14 +71,20 @@
 
 .popup .content-popup .body-popup .results-popup .left-popup{
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
+    width: 100%;
+    height: 100%;
 }
 .popup .content-popup .body-popup .results-popup .left-popup .link-popup{
-    position: relative !important;
-    display: block !important;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    word-wrap: break-word;
+    padding: 1em;
+    box-sizing: border-box;
 }
-.popup .content-popup .body-popup .results-popup .left-popup a{
+.popup .content-popup .body-popup .results-popup .left-popup > .update-popup, .delete-popup{
     position: absolute;
     bottom:0;
     font-family: 'Montserrat', sans-serif;
