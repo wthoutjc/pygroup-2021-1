@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, make_response
 import os
 from flask_cors import CORS
 import base64
+import time
 
 #Lógica CRUD
 from CRUD.crud import CRUD
@@ -24,8 +25,10 @@ def create():
         if request.form: #En request.form van los strings
             name = request.form['name']
             link = request.form['link']
-        crud.create(name, link, image) #Create
+        data = crud.create(name, link, image) #Create
         res = make_response(jsonify({"results": 'ok'}), 200)
+        time.sleep(2.4)
+        print(data)
         return res
     
 

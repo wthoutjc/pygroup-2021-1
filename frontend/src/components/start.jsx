@@ -53,8 +53,8 @@ const Start = () => {
         <div className="reader">
           <div className="credits">
             <h3> Por: </h3>
-            <h4> - Name 0 </h4>
-            <h4> - Name 1 </h4>
+            <h4> Sebastián David Rodríguez Ramírez - 20181020040 </h4>
+            <h4> Juan Camilo Ramírez Rátiva - 20181020089 </h4>
           </div>
           <div className="message" id="message">
             {' '}
