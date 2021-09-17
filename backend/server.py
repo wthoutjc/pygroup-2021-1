@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify, make_response
 import os
 from flask_cors import CORS
 import base64
-import time
 
 #Lógica CRUD
 from CRUD.crud import CRUD
