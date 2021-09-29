@@ -31,7 +31,6 @@ def create():
             res = make_response(jsonify({"results": 'ok'}), 200)
         return res
     
-
 @app.route("/read", methods=["GET"])
 def read():
     data = crud.read()
