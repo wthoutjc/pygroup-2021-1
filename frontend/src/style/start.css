@@ -4,12 +4,13 @@
     margin : 0;
     padding: 0;
 }
-
 .start {
     width: 100vw;
     height: 100vh;
     font-family: 'Montserrat', sans-serif;
     display: grid;
+    overflow-y: auto;
+    overflow-x: hidden;
     grid-template-rows: 75px calc(100vh - 75px);
     grid-template-areas: 
     "header"
@@ -50,6 +51,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 0.5em;
+    text-align: center;
 }
 .start .reader .movies{
     color: black;

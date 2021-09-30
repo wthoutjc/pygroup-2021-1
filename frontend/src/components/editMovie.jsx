@@ -120,7 +120,7 @@ const EditMovie = () => {
             to="#"
             onClick={updateInfo}
           >
-            Add Movie
+            Update
           </Link>
         </div>
       </div>
